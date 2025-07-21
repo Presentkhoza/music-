@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Songs by Genre</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section class="section__container">
+    <h2 class="section__header" id="genreTitle">Songs</h2>
+    <ul id="songList" class="song__list"></ul>
+  </section>
+
+  <script src="data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const genre = params.get("genre");
+
+    const genreTitle = document.getElementById("genreTitle");
+    genreTitle.textContent = genre.toUpperCase() + " Songs";
+
+    const songList = document.getElementById("songList");
+
+    // Sample genre filtering logic (update as needed)
+    const genreMap = {
+      rnb: [0],
+      pop: [1],
+      hiphop: [2],
+      rock: [3, 4] // optional: assign multiple songs to a genre
+    };
+
+    const indexes = genreMap[genre] || [];
+
+    indexes.forEach(i => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${songs[i].name}</strong> by ${songs[i].artist}
+        <br/>
+        <audio controls src="assets/${songs[i].path}"></audio>
+      `;
+      songList.appendChild(li);
+    });
+  </script>
+</body>
+</html>
